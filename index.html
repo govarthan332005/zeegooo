@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#ef4444" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>HomePlate — Home-cooked meals in 45 minutes</title>
+  <meta name="description" content="Order real home-cooked food from neighbourhood chefs. Warm, honest, delivered in 45 minutes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Top header (location + search) -->
+  <header class="top-header" id="top-header"></header>
+
+  <!-- Main content -->
+  <main id="app-root">
+    <div class="full-loader">
+      <div class="cooking-loader">
+        <div class="steam"></div><div class="steam"></div><div class="steam"></div>
+        <div class="pan"></div>
+        <div class="label">Warming up the kitchen…</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Nav (Zomato-style) -->
+  <nav class="bottom-nav" id="bottom-nav"></nav>
+
+  <!-- Global Address Sheet (bottom sheet) -->
+  <div class="sheet-overlay" id="address-sheet">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3><i class="fa-solid fa-location-dot"></i> Select delivery address</h3>
+        <button class="icon-btn" id="close-address-sheet"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="sheet-body" id="address-sheet-body"></div>
+    </div>
+  </div>
+
+  <!-- Global Add/Edit Address Sheet with Map -->
+  <div class="sheet-overlay" id="map-sheet">
+    <div class="sheet sheet-full">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 id="map-sheet-title"><i class="fa-solid fa-map-location-dot"></i> Set your location</h3>
+        <button class="icon-btn" id="close-map-sheet"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="map-container"></div>
+      <div class="map-form">
+        <div class="map-current-address">
+          <i class="fa-solid fa-location-crosshairs"></i>
+          <div>
+            <div class="map-addr-title" id="map-addr-title">Detecting location…</div>
+            <div class="map-addr-sub" id="map-addr-sub">Move the pin to fine-tune</div>
+          </div>
+          <button class="btn-link" id="use-current-loc"><i class="fa-solid fa-crosshairs"></i> Locate me</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>House / Flat / Building</label>
+            <input class="input" id="addr-house" placeholder="e.g. 12A, Sunrise Apartments" />
+          </div>
+          <div class="form-group">
+            <label>Area / Landmark</label>
+            <input class="input" id="addr-area" placeholder="e.g. Near Central Park" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Save this address as</label>
+          <div class="tag-row" id="addr-tags">
+            <button type="button" class="tag active" data-tag="Home"><i class="fa-solid fa-house"></i> Home</button>
+            <button type="button" class="tag" data-tag="Work"><i class="fa-solid fa-briefcase"></i> Work</button>
+            <button type="button" class="tag" data-tag="Other"><i class="fa-solid fa-location-dot"></i> Other</button>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block" id="save-address-btn"><i class="fa-solid fa-check"></i> Save address & continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Review Modal -->
+  <div class="modal-overlay" id="review-modal">
+    <div class="modal">
+      <button class="icon-btn modal-close" id="review-close"><i class="fa-solid fa-xmark"></i></button>
+      <h3>Rate your order</h3>
+      <p class="muted">How was your meal? Your chef would love to hear.</p>
+      <div class="stars" id="rating-stars">
+        <span class="star" data-val="1">★</span>
+        <span class="star" data-val="2">★</span>
+        <span class="star" data-val="3">★</span>
+        <span class="star" data-val="4">★</span>
+        <span class="star" data-val="5">★</span>
+      </div>
+      <div class="form-group">
+        <label>Your review</label>
+        <textarea class="input" id="review-text" placeholder="Tell us what you loved…"></textarea>
+      </div>
+      <button class="btn btn-primary btn-block" id="submit-review"><i class="fa-solid fa-paper-plane"></i> Submit review</button>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
